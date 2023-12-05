@@ -20,7 +20,7 @@ export default {
   },
 
   created() {
-    api.getAssets().then((assets) => (this.aseets = assets));
+    api.getAssets().then((assets) => (this.assets = assets));
   },
 };
 </script>
