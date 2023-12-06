@@ -1,8 +1,8 @@
 //url absoluta api de coincap
-const url = "api.coincap.io/v2";
+const url = "https://api.coincap.io/v2/assets?limit=20";
 
 function getAssets() {
-  return fetch(`${url}/assets?limit=20`)
+  return fetch(`${url}`)
     .then((res) => res.json())
     .then((res) => res.data);
 }
