@@ -8,7 +8,9 @@
       :color="color"
       :size="size"
     ></pulse-loader>
-    <slot></slot>
+    <p v-show="!isLoading">
+      <slot></slot>
+    </p>
   </button>
 </template>
 

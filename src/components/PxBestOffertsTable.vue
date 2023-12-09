@@ -14,14 +14,20 @@
       <td>
         <px-button
           :isLoading="m.isLoading || false"
-          v-if="!m.url"
+          v-if="!m.url && !m.showWebSite"
           @custom-click="getWebsite(m)"
         >
           <slot> Obtener Link</slot>
         </px-button>
-        <a v-else class="hover:underline text-green-600" target="_blanck">
+        <a
+          v-else-if="m.showWebSite || false"
+          class="text-green-600 hover:underline"
+          :href="m.url"
+          target="_blanck"
+        >
           {{ m.url }}
         </a>
+        <p v-else class="text-blue-950">{{ m.url }}</p>
       </td>
     </tr>
   </table>
@@ -47,11 +53,17 @@ export default {
   methods: {
     getWebsite(market) {
       market.isLoading = true
+      market.showWebSite = true
       return api
         .getExchange(market.exchangeId)
         .then((res) => (market.url = res.exchangeUrl))
         .finally(() => (market.isLoading = false))
-        .catch(() => (market.url = 'Website del exchange no disponible'))
+        .catch(
+          () => (
+            (market.url = 'Website del exchange no disponible'),
+            (market.showWebSite = false)
+          )
+        )
     },
   },
 
@@ -63,3 +75,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+td {
+  padding: 10px;
+  text-align: center;
+}
+</style>
